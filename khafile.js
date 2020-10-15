@@ -4,4 +4,5 @@ project.addShaders('shaders/**');
 project.addSources('src');
 project.addSources('lib');
 project.addParameter('--macro addGlobalMetadata("", "@:build(mixin.Mixin.sugar())", true, true, false)');
+project.addLibrary('nape-haxe4');
 resolve(project);

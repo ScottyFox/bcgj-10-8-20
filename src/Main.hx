@@ -1,5 +1,5 @@
 package;
-
+import game.scenes.NapeTest;
 import game.scenes.MenuScene;
 import game.scenes.PlayScene;
 import core.Game;
@@ -10,7 +10,7 @@ class Main {
 			title: 'Phaser 3 example',
 			width: 800,
 			height: 600,
-			scene: [MenuScene, PlayScene],
+			scene: [PlayScene],
 			fps: {
 				min: 30,
 				target: 60,
