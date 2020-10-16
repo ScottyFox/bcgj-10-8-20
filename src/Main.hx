@@ -1,5 +1,4 @@
 package;
-import game.scenes.NapeTest;
 import game.scenes.MenuScene;
 import game.scenes.PlayScene;
 import core.Game;

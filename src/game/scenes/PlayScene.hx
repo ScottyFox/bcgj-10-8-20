@@ -15,6 +15,9 @@ import core.gameobjects.Image;
 import core.gameobjects.Sprite;
 import game.scripts.RailsObject;
 
+import game.scripts.TilemapModule;
+import game.scripts.TilemapLoader;
+
 import core.scene.Scene;
 
 class PlayScene extends NapeScene {
@@ -23,6 +26,7 @@ class PlayScene extends NapeScene {
   private var _star:Image;
   private var _starRail:RailsObject;
   private var _itemTest:ItemTest;
+  private var _tilemapM:TilemapModule;
 
   private var _keys:{
     w:Key,
@@ -30,6 +34,7 @@ class PlayScene extends NapeScene {
     s:Key,
     d:Key
   };
+
 
   public function new() {
     super('Play',false,true);
@@ -43,17 +48,26 @@ class PlayScene extends NapeScene {
     load.image('turret_top', 'turret_top');
     load.image('turret_bullet', 'turret_bullet');
     load.image('item_pizza', 'item_pizza');
+    load.spritesheet('test_tiles', 'test_tiles', { frameWidth: 24, frameHeight: 24 });
     load.spritesheet('astro', 'astro', { frameWidth: 24, frameHeight: 24 });
     load.spritesheet('dude', 'dude', { frameWidth: 32, frameHeight: 48 });
   }
 
 	override function create() {
+    
     initspace({x:0,y:0},20,20);
 
-    var sky:Image = new Image(this, 400, 300, 'test_groundmap');
-    sky.x = sky.width/2;
-    sky.y = sky.height/2;
-    sys.displayList.add([sky]);
+    //var sky:Image = new Image(this, 400, 300, 'test_groundmap');
+    //sky.x = sky.width/2;
+    //sky.y = sky.height/2;
+    //sys.displayList.add([sky]);
+
+    //_tilemap = new LargeScaleTileMap(this,0,0,'test_tiles',{width:5,height:5},["0","0"]);
+    //sys.displayList.add([_tilemap]);
+    _tilemapM = new TilemapModule(this,0,0,'test_tiles',{width:5,height:5},["0","1"],0);
+    sys.displayList.add([_tilemapM]);
+    TilemapLoader.getMapData('dungeon_test',[0xFFFFFFFF,0xFF000000],_tilemapM.loadMapData);
+
 
     _star = new Image(this, 450, 300, 'star');
     _star.setScale(3);
@@ -70,9 +84,9 @@ class PlayScene extends NapeScene {
     sys.updateList.add(_starRail);
 
 
-    var map = MapPhysicsData.create_testmap(BodyType.STATIC);
-    map.position.setxy(0, 0);
-    map.space = space;
+    //var map = MapPhysicsData.create_testmap(BodyType.STATIC);
+    //map.position.setxy(0, 0);
+    //map.space = space;
 
     _keys = {
       w: input.keyboard.addKey('W'),
@@ -82,7 +96,7 @@ class PlayScene extends NapeScene {
     };
 
     PlayerTest.init_astroAnimations(anims);
-    _player = new PlayerTest( this, space, 600, 400);
+    _player = new PlayerTest( this, space, 0, 0);
     _player.setControls(_keys.w,_keys.s,_keys.a,_keys.d);
     sys.displayList.add([_player]);
     sys.updateList.add(_player);
